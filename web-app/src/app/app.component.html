@@ -1,0 +1,12 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<h1>Hello</h1>
+<p *ngIf="user">Logged in as {{user.firstName}} {{user.lastName}} ({{user.email}})<button (click)="logout()">Logout</button></p>
+<button *ngIf="!user" (click)="login()">Login</button>
+<router-outlet></router-outlet>
