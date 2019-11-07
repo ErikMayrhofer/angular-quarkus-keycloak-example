@@ -26,4 +26,25 @@
   </ul>
 </div>
 
+<div>
+  <h2>UserStuff</h2>
+  <ul>
+    <li *ngFor="let stuff of userstuff">{{stuff.text}}</li>
+  </ul>
+  <button (click)="addStuff()">AddUserStuff</button>
+</div>
+
+<div>
+  <h2>AllStuff</h2>
+  <ul>
+    <li *ngFor="let stuff of allstuff">{{stuff.text}}</li>
+  </ul>
+</div>
+
+<div>
+  <input #path>
+  <button (click)="sendPath(path.value)">GetPath</button>
+  <button (click)="postPath(path.value)">PostPath</button>
+</div>
+
 <router-outlet></router-outlet>

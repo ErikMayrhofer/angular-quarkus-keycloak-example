@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
 import { ResourceService } from './resource.service';
+import { Userstuff } from './userstuff.model';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,14 @@ export class AppComponent implements OnInit {
   roles: string[] = [];
   response: string;
   token: string;
+  userstuff: Array<Userstuff>;
+  allstuff: Array<Userstuff>;
+
+  sendPath(path: string): void {
+    this.resourceService.getResource(path).subscribe(p => {
+      console.log(p);
+    });
+  }
 
   ngOnInit(): void {
     this.keycloak.isLoggedIn().then(loggedIn => {
@@ -28,7 +37,20 @@ export class AppComponent implements OnInit {
           this.user = userProfile;
         });
         this.roles = this.keycloak.getUserRoles();
+        this.keycloak.getToken().then(token => {
+          this.token = token;
+        });
+        this.refreshStuff();
       }
+    });
+  }
+
+  refreshStuff() {
+    this.resourceService.getStuff().subscribe(stuff => {
+      this.userstuff = stuff;
+    });
+    this.resourceService.getAllStuff().subscribe(allstuff => {
+      this.allstuff = allstuff;
     });
   }
 
@@ -51,6 +73,18 @@ export class AppComponent implements OnInit {
     this.response = '';
     this.resourceService.getResource(path).subscribe(it => {
       this.response = it.string;
+    });
+  }
+
+  postPath(path: string) {
+    this.resourceService.postResource(path).subscribe(response => {
+      console.log(response);
+    });
+  }
+
+  addStuff() {
+    this.resourceService.postResource('user').subscribe(response => {
+      this.refreshStuff();
     });
   }
 }
