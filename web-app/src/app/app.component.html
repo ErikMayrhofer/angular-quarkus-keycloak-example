@@ -1,12 +1,29 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
 <h1>Hello</h1>
-<p *ngIf="user">Logged in as {{user.firstName}} {{user.lastName}} ({{user.email}})<button (click)="logout()">Logout</button></p>
+<p *ngIf="user">Logged in as {{user.firstName}} {{user.lastName}} ({{user.email}}) [{{user.id}}]<button (click)="logout()">Logout</button></p>
+<code *ngIf="user">{{token}}</code>
+
 <button *ngIf="!user" (click)="login()">Login</button>
+
+<div>
+  <h2>Test Roles</h2>
+  <h3>Roles</h3>
+  <ul>
+    <li *ngFor="let role of roles">{{role}}</li>
+  </ul>
+  <h3>Test Roles</h3>
+  <ul>
+    <li *ngFor="let testrole of ['view_a', 'view_b', 'view_c']">
+      <button (click)="testRole(testrole)">{{testrole}}</button>
+      <span *ngIf="roles.includes(testrole)">Given</span>
+    </li>
+  </ul>
+  <h3>Test Resource</h3>
+  {{response}}
+  <ul>
+    <li *ngFor="let testresource of ['resource_a', 'resource_b', 'resource_c']">
+      <button (click)="resource(testresource)">{{testresource}}</button>
+    </li>
+  </ul>
+</div>
+
 <router-outlet></router-outlet>

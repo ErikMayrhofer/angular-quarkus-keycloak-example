@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { environment } from 'src/environments/environment';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { provideRoutes } from '@angular/router';
+import { AuthInterceptorService } from './auth.interceptor';
 
 const keycloakService = new KeycloakService();
 
@@ -15,12 +18,18 @@ const keycloakService = new KeycloakService();
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     {
       provide: KeycloakService,
       useValue: keycloakService
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
     }
   ],
   entryComponents: [AppComponent]
@@ -33,7 +42,12 @@ export class AppModule implements DoBootstrap {
     keycloakService
       .init({
         config: keycloakConfig,
-        initOptions: { onLoad: 'check-sso', checkLoginIframe: false }
+        initOptions: { onLoad: 'check-sso', checkLoginIframe: false },
+        enableBearerInterceptor: false,
+        bearerExcludedUrls: [],
+        authorizationHeaderName: 'Authorization',
+        bearerPrefix: 'Bearer',
+        loadUserProfileAtStartUp: true
       })
       .then(() => {
         console.log('[ngDoBootstrap] bootstrap app');
