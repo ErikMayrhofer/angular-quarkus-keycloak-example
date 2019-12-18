@@ -1,0 +1,9 @@
+= Keycloak Angular Quarkus
+This is a Repository showing how to perform Authorization (OAuth2) using Keycloak, Angular and Quarkus.
+
+== Structure
+This Repository consists of three parts.
+
+.`keycloak-quarkus-backend` is the Resource-Server implemented in Quarkus
+.`web-app` contains the frontend, implemented in Angular
+.`docker-compose.yml` contains the docker-image for the keycloak server.
